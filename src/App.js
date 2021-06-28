@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import React, { Component } from 'react';
 import axios from 'axios';
+import Image from 'react-bootstrap/Image'
 
 export class App extends Component {
 
@@ -20,14 +20,13 @@ export class App extends Component {
   }
   submitData=async (e)=>{
     e.preventDefault()
-    let axiosResponse= await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.afaca60038b93085cf4229304fcb1ffc&city=${this.state.displayName}&format=json`)
+    let axiosResponse = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.afaca60038b93085cf4229304fcb1ffc&city=${this.state.displayName}&format=json`)
+
     this.setState({
       displayName:axiosResponse.data[0].display_name,
       longitude:axiosResponse.data[0].lon,
       latitude:axiosResponse.data[0].lat
     })
-    console.log(axiosResponse.data[0].display_name)
-    console.log(axiosResponse.data[0].lon)
     console.log(axiosResponse.data[0].lat)
   }
   render() {
@@ -37,13 +36,14 @@ export class App extends Component {
           <input type='text' placeholder='city name....' onChange={(e)=>{this.nameChangeHandler(e)}} />
           <button>Search</button>
         </form>
-
         <h1>{this.state.displayName}</h1>
         <h1>{this.state.longitude}</h1>
         <h1>{this.state.latitude}</h1>
+        <Image src={`https://maps.locationiq.com/v3/staticmap?key=pk.afaca60038b93085cf4229304fcb1ffc&center=${this.state.latitude},${this.state.longitude}&zoom=20`} rounded/>
+        
       </div>
     )
   }
 }
 
-export default App
+export default  App
