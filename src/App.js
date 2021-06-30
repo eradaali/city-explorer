@@ -24,12 +24,19 @@ export class App extends Component {
   submitData=async (e)=>{
     e.preventDefault()
     let axiosResponse= await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.60346fba30221450f0bd55e67928ff53&city=${this.state.displayName}&format=json`)
+    let axiosResponse1= await axios.get(`http://localhost:8000/weather?searchQuery=${this.state.displayName}&format=json`)
     this.setState({
+      displayName:axiosResponse1.data[0].display_name,
+      longitude:axiosResponse1.data[0].lon,
+      latitude:axiosResponse1.data[0].lat,
+
+
       displayName:axiosResponse.data[0].display_name,
       longitude:axiosResponse.data[0].lon,
       latitude:axiosResponse.data[0].lat
     })
     console.log(axiosResponse.data[0].lat)
+    console.log(axiosResponse1.data[0].lat)
   }
   render() {
     return (
